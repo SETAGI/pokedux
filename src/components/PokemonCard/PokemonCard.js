@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "antd";
 import StarButton from "../StarButton/StarButton";
 import { useDispatch } from "react-redux";
-import { setPokemonSelected } from "../../redux/actions";
+import { setPokemonSelected } from "../../redux/slices/dataSlice";
 
 const { Meta } = Card;
 

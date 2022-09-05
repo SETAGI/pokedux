@@ -3,9 +3,9 @@ import './App.css';
 import PokemonList from './components/PokemonList/PokemonList'
 import Searcher from './components/Searcher/Searcher';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPokemonsDetailed } from './redux/actions';
 import logo from './statics/logo.svg';
 import { Spin } from 'antd';
+import { fetchPokemonsWithDetails } from './redux/slices/dataSlice';
 
 function App() {
 
@@ -22,7 +22,7 @@ function App() {
 
   useEffect( () => {
     const response = async() => {
-      dispatch( getPokemonsDetailed() )
+      dispatch( fetchPokemonsWithDetails() )
     }
     response();
   },[])
