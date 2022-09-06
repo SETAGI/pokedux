@@ -5,7 +5,7 @@ import Searcher from './components/Searcher/Searcher';
 import { useSelector, useDispatch } from 'react-redux';
 import logo from './statics/logo.svg';
 import { Spin } from 'antd';
-import { fetchPokemonsWithDetails } from './redux/slices/dataSlice';
+import { fetchPokemonsWithDetails, setFilteredPokemons } from './redux/slices/dataSlice';
 
 function App() {
 
@@ -14,29 +14,30 @@ function App() {
   // to the whole state, and just rename the data inside the object that is realy that I need to spread the data,
   // in this case were pokemons and loadingStatus, and with the same name I receive the data in the lefth side of the equal ('=')
   
-  const {pokemons, loadingStatus } = useSelector( ({data, loading}) => (
-    { pokemons : data.pokemons, loadingStatus: loading.loading}) 
+  const {pokemons, filteredPokemons, loadingStatus } = useSelector( ({data, loading}) => (
+    { pokemons : data.pokemons, filteredPokemons: data.filteredPokemons, loadingStatus: loading.loading}) 
   );
 
   const dispatch = useDispatch();
 
   useEffect( () => {
-    const response = async() => {
       dispatch( fetchPokemonsWithDetails() )
-    }
-    response();
   },[])
+
+  const onChange = ( value ) => {
+    dispatch( setFilteredPokemons( value.target.value) )
+}
 
   return (
     <div className="App">
       <div className='searchContainer'>
         <img src={logo} alt='logo'/>
-        <Searcher />
+        <Searcher onChange={onChange}/>
       </div>
       {
         loadingStatus
         ? <Spin size={'large'}/> 
-        : <PokemonList pokemons={pokemons}/>
+        : <PokemonList pokemons={filteredPokemons}/>
       }
     </div>
   );
